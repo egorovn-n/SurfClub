@@ -2,7 +2,42 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex flex-column">
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        
+    }
+
+    @if (ViewBag.Posts != null)
+    {
+        @foreach (Post post in ViewBag.Posts)
+        {
+            <div class="modal static-modal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-start pt-0 pb-0">
+                            <div>
+                                <img src="~/images/avatarka.jpg" height="30" style="border-radius: 50%"/>
+                            </div>
+                            <div class="ms-2">
+                                <label class="fs-5 fw-normal d-block">@post.Author.UserName</label>
+                                <label class="fs-7 fw-light">@post.CreateDate</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-body">
+                            @if (!string.IsNullOrEmpty(@post.Text))
+                            {
+                                <p>@post.Text</p>
+                            }
+                        </div>
+
+                        <div class="modal-footer">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>

@@ -25,12 +25,21 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    await SeedData.Initialize(services);
+    using (var context = scope.ServiceProvider.GetService<ClubContext>())
+    {
+        //context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+
+        await SeedData.Initialize(services);
+    }
 }
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -45,6 +54,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
