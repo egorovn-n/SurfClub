@@ -1,0 +1,98 @@
+﻿@model RegistrationViewModel
+
+<form method="post" asp-controller="Registration" asp-action="Registration">
+    <div class="modal static-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <span class="modal-title">Регистрация нового пользователя</span>
+                </div>
+
+
+                <div class="modal-body d-flex flex-column align-items-center">
+                    
+                    <div class="row align-items-start w-100">
+                        <div class="col">
+                            <div class="mb-3 fs-6 w-100">
+                                <label asp-for="UserName" class="form-label"></label><br />
+                                <input asp-for="UserName" class="form-control" />
+                                <span asp-validation-for="UserName"></span>
+                            </div>
+
+                            <div class="mb-3 fs-6 w-100">
+                                <label asp-for="Email" class="form-label"></label><br />
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email"></span>
+                            </div>
+                            
+                            <div class="mb-3 fs-6 w-100">
+                                <label asp-for="Password" class="form-label"></label><br />
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password"></span>
+                            </div>
+
+                            <div class="mb-3 fs-6 w-100">
+                                <label asp-for="ConfirmPassword" class="form-label"></label><br />
+                                <input asp-for="ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="ConfirmPassword"></span>
+                            </div>
+
+                            <div class="mb-3 fs-6 w-100">
+                                <label asp-for="LastName" class="form-label"></label><br />
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName"></span>
+                            </div>
+
+                            <div class="mb-3 fs-6 w-100">
+                                <label asp-for="FirstName" class="form-label"></label><br />
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <img src="~/images/photo_placeholder.jpg" class="float-end img-fluid"/>
+                        </div>
+                    </div>
+                    <div class="row w-100">
+                        <div class="mb-3 fs-6 w-100">
+                            <label asp-for="SelectPhoto" class="form-label"></label><br />
+                            <input asp-for="SelectPhoto" class="form-control" />
+                            <span asp-validation-for="SelectPhoto"></span>
+                        </div>
+
+                        <div class="mb-3 fs-6 w-100">
+                            <label asp-for="ContactInfo" class="form-label"></label><br />
+                            <input asp-for="ContactInfo" class="form-control" />
+                            <span asp-validation-for="ContactInfo"></span>
+                        </div>
+
+                        <div class="mb-3 fs-6 w-100">
+                            <label asp-for="About" class="form-label"></label><br />
+                            <input asp-for="About" class="form-control" />
+                            <span asp-validation-for="About"></span>
+                        </div>
+
+                        <div class="mb-3 fs-6 w-100">
+                            <label asp-for="Achievements" class="form-label"></label><br />
+                            <input asp-for="Achievements" class="form-control" />
+                            <span asp-validation-for="Achievements"></span>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col">
+                            <label class="float-start fs-6">* - поля, обязательные для заполнения</label>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary float-end">Зарегистрироваться</button>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

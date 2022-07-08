@@ -1,11 +1,43 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using SurfClub.Helpers
+@model Post;
+
 
 <div class="d-flex flex-column">
     @if (User.Identity != null && User.Identity.IsAuthenticated)
     {
-        
+         <form method="post" asp-controller="Home" asp-action="SavePost" enctype="multipart/form-data">
+            <div class="modal static-modal" tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-start">
+                            <label>Добавление новой записи</label>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <label asp-for="Text" class="form-label"></label>
+                                <textarea asp-for="Text" type="text" class="form-control" rows="5"></textarea>
+                                <span asp-validation-for="Text"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-3">
+
+                                <div class="mb-3">
+                                    <label for="formFileSm" class="form-label">Прикрепить изображение</label>
+                                    <input class="form-control form-control-sm" id="formFileSm" type="file" name="photo">
+                                </div>
+
+                                <div class="d-inline-block align-self-end">
+                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     }
 
     @if (ViewBag.Posts != null)
@@ -13,7 +45,7 @@
         @foreach (Post post in ViewBag.Posts)
         {
             <div class="modal static-modal" tabindex="-1">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header justify-content-start pt-0 pb-0">
                             <div>
@@ -29,6 +61,11 @@
                             @if (!string.IsNullOrEmpty(@post.Text))
                             {
                                 <p>@post.Text</p>
+                            }
+                            @if (@post.Photo.HasValue)
+                            {
+                                var photoUrl = ImageHelper.GetUrl(post.Photo);
+                                <img src="@Url.Content(photoUrl)" />
                             }
                         </div>
 

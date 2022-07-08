@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SurfClub.Helpers;
 using SurfClub.Models;
-using System.Diagnostics;
+using System.Security.Claims;
 
 namespace SurfClub.Controllers
 {
@@ -18,22 +19,38 @@ namespace SurfClub.Controllers
 
         public IActionResult Index()
         {
+            SetPostsToViewBag();
+            return View();
+        }
+        [HttpPost]
+        public async Task<ActionResult> SavePost(Post newPost, IFormFile? photo)
+        {
+            if((newPost == null || string.IsNullOrEmpty(newPost.Text))
+                && photo == null)
+            {
+                SetPostsToViewBag();
+                return View("Index", newPost);
+            }
+
+            if (photo != null)
+            {
+                var imageHelper = new ImageHelper();
+                newPost.Photo = await imageHelper.UploadImage(photo);
+            }
+
+            newPost.CreateDate = DateTime.Now;
+            newPost.AuthorId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            _context.Posts.Add(newPost);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        private void SetPostsToViewBag()
+        {
             var posts = _context.Posts
                 .Include(p => p.Author)
                 .ToList();
             ViewBag.Posts = posts;
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

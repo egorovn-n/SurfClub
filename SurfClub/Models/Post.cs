@@ -17,11 +17,13 @@ namespace SurfClub.Models
         /// Текст записи
         /// </summary>
         [MaxLength(5000)]
-        public string Text { get; set; }
+        [Display(Name = "Введите текст")]
+        public string? Text { get; set; }
 
         /// <summary>
         /// Изображение
         /// </summary>
+        [Display(Name = "Прикрепить изображение")]
         public Guid? Photo { get; set; }
 
         /// <summary>
