@@ -19,21 +19,21 @@ namespace SurfClub.Models
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Фамилия")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [Display(Name = "Имя")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Display(Name = "Выберите фото")]
         public Guid? SelectPhoto { get; set; }
 
         [Display(Name = "Контактная информация")]
-        public string ContactInfo { get; set; }
+        public string? ContactInfo { get; set; }
 
         [Display(Name = "О себе")]
-        public string About { get; set; }
+        public string? About { get; set; }
 
         [Display(Name = "Достижения")]
-        public string Achievements { get; set; }
+        public string? Achievements { get; set; }
     }
 }

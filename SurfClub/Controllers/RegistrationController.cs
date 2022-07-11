@@ -8,14 +8,17 @@ namespace SurfClub.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ClubContext _context;
 
         public RegistrationController(
             UserManager<User> userManager,
-            SignInManager<User> signInManager
+            SignInManager<User> signInManager,
+            ClubContext context
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -31,28 +34,42 @@ namespace SurfClub.Controllers
         [HttpPost]
         public async Task<ActionResult> Registration(RegistrationViewModel registrationData)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    ModelState.AddModelError("", "Неверный псевдоним или пароль!");
-            //    return View("Index", loginData);
-            //}
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Заполнены не все обязательные поля!");
+                return View("Index", registrationData);
+            }
+            var user = await _userManager.FindByNameAsync(registrationData.UserName);
+            if (user != null)
+            {
+                ModelState.AddModelError("", "Такой псевдоним уже занят!");
+                return View("Index", registrationData);
+            }
+            if (user != null)
+            {
+                ModelState.AddModelError("", "Такая почта уже зарегистрирована!");
+                return View("Index", registrationData);
+            }
+            if (registrationData.Password != registrationData.ConfirmPassword)
+            {
+                ModelState.AddModelError("", "Пароли не совпадают");
+                return View("Index", registrationData);
+            }
+            user = new User()
+            {
+                UserName = registrationData.UserName,
+                Email = registrationData.Email,
+                LastName = registrationData.LastName,
+                FirstName = registrationData.FirstName,
+                Photo = registrationData.SelectPhoto,
+                ContactInfo = registrationData.ContactInfo,
+                About = registrationData.About,
+                Achievements = registrationData.Achievements
+            };
+            var result = await _userManager.CreateAsync(user, registrationData.Password);
+            _context.SaveChanges();
 
-            //var user = await _userManager.FindByNameAsync(loginData.UserName);
-            ////Поиск юзера
-            //if (user == null)
-            //{
-            //    ModelState.AddModelError("", "Неверный псевдоним или пароль!");
-            //    return View("Index", loginData);
-            //}
-
-            ////Попытка авторизации
-            //var result = await _signInManager.PasswordSignInAsync(user, loginData.Password, loginData.RememberMe, false);
-            //if (!result.Succeeded)
-            //{
-            //    ModelState.AddModelError("", "Неверный псевдоним или пароль!");
-            //    return View("Index", loginData);
-            //}
-
+            await _signInManager.SignInAsync(user, isPersistent: false);
             ////Переход на главную страницу
             return RedirectToAction("Index", "Home");
         }
