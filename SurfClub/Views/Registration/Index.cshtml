@@ -8,7 +8,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
-                <div class="modal-header">
+                <div class="modal-header modal-color">
                     <span class="modal-title">Регистрация нового пользователя</span>
                 </div>
 
@@ -67,20 +67,20 @@
 
                     <div class="row w-100">
                         <div class="mb-3   w-100">
-                            <label asp-for="ContactInfo" class="form-label"></label><br />
-                            <input asp-for="ContactInfo" class="form-control" />
+                            <label asp-for="ContactInfo" class="form-label"></label>
+                            <textarea asp-for="ContactInfo" type="text" class="form-control" rows="4"></textarea>
                             <span asp-validation-for="ContactInfo"></span>
                         </div>
 
                         <div class="mb-3   w-100">
-                            <label asp-for="About" class="form-label"></label><br />
-                            <input asp-for="About" class="form-control" />
+                            <label asp-for="About" class="form-label"></label>
+                            <textarea asp-for="About" type="text" class="form-control" rows="4"></textarea>
                             <span asp-validation-for="About"></span>
                         </div>
 
                         <div class="mb-3   w-100">
-                            <label asp-for="Achievements" class="form-label"></label><br />
-                            <input asp-for="Achievements" class="form-control" />
+                            <label asp-for="Achievements" class="form-label"></label>
+                            <textarea asp-for="Achievements" type="text" class="form-control" rows="4"></textarea>
                             <span asp-validation-for="Achievements"></span>
                         </div>
                     </div>

@@ -14,8 +14,20 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
- 
+    margin-bottom: 60px;
+    background-color: #F5F5F5;
+}
+
+header {
+    color: #C7D2D9
+}
+
+.header-color {
+    background-color: #C7D2D9;
+}
+
+.modal-color {
+    background-color: #DCE4E9;
 }
 
 .static-modal {

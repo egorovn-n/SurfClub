@@ -12,7 +12,7 @@
             <div class="modal static-modal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        <div class="modal-header justify-content-start">
+                        <div class="modal-header justify-content-start modal-color">
                             <label>Добавление новой записи</label>
                         </div>
                         <div class="modal-body">
@@ -47,7 +47,7 @@
             <div class="modal static-modal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
-                        <div class="modal-header justify-content-start pt-0 pb-0">
+                        <div class="modal-header modal-color justify-content-start pt-0 pb-0">
                             <div>
                                 @if (@post.Author.Photo != null)
                                 {
@@ -68,16 +68,20 @@
                         <div class="modal-body">
                             @if (!string.IsNullOrEmpty(@post.Text))
                             {
-                                <p>@post.Text</p>
+                                <div>
+                                    <p>@post.Text</p>
+                                </div>
                             }
                             @if (@post.Photo.HasValue)
                             {
                                 var photoUrl = ImageHelper.GetUrl(post.Photo);
-                                <img src="@Url.Content(photoUrl)" />
+                                <div class="justify-content-center">
+                                    <img src="@Url.Content(photoUrl)" class="mw-100"/>
+                                </div>
                             }
                         </div>
 
-                        <div class="modal-footer">
+                        <div class="modal-footer modal-color">
                         </div>
 
                     </div>
