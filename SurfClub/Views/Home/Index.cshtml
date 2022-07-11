@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Лента новостей";
 }
 @using SurfClub.Helpers
 @model Post;
@@ -49,7 +49,15 @@
                     <div class="modal-content">
                         <div class="modal-header justify-content-start pt-0 pb-0">
                             <div>
-                                <img src="~/images/avatarka.jpg" height="30" style="border-radius: 50%"/>
+                                @if (@post.Author.Photo != null)
+                                {
+                                    var authorPhotoUrl = ImageHelper.GetUrl(post.Author.Photo);
+                                    <img src="@Url.Content(authorPhotoUrl)" height="30" style="border-radius: 50%"/>
+                                }
+                                else 
+                                {
+                                    <img src="~/images/avatarka.jpg" height="30" style="border-radius: 50%"/>
+                                }
                             </div>
                             <div class="ms-2">
                                 <label class="fs-5 fw-normal d-block">@post.Author.UserName</label>

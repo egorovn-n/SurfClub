@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SurfClub.Helpers;
 using SurfClub.Models;
 
 namespace SurfClub.Controllers
@@ -32,7 +33,7 @@ namespace SurfClub.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> Registration(RegistrationViewModel registrationData)
+        public async Task<ActionResult> Registration(RegistrationViewModel registrationData, IFormFile? photo)
         {
             if (!ModelState.IsValid)
             {
@@ -61,14 +62,19 @@ namespace SurfClub.Controllers
                 Email = registrationData.Email,
                 LastName = registrationData.LastName,
                 FirstName = registrationData.FirstName,
-                Photo = registrationData.SelectPhoto,
                 ContactInfo = registrationData.ContactInfo,
                 About = registrationData.About,
                 Achievements = registrationData.Achievements
             };
+
+            if (photo != null)
+            {
+                var imageHelper = new ImageHelper();
+                user.Photo = await imageHelper.UploadImage(photo);
+            }
+
             var result = await _userManager.CreateAsync(user, registrationData.Password);
             _context.SaveChanges();
-
             await _signInManager.SignInAsync(user, isPersistent: false);
             ////Переход на главную страницу
             return RedirectToAction("Index", "Home");

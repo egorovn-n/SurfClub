@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using SurfClub.Helpers
+@inject UserManager<SurfClub.Models.User> userManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,8 +26,17 @@
                     <ul class="navbar-nav">
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
+                            var userPhoto = ImageHelper.GetUrl(userManager.FindByNameAsync(User.Identity.Name).Result.Photo);
                             <li class="nav-item mt-2 me-2">
-                                <img src="~/images/avatarka.jpg" height="30" style="border-radius: 50%"/>
+                                @if (userPhoto != null)
+                                {
+                                    <img src="@Url.Content(userPhoto)" height="30" style="border-radius: 50%"/>
+                                }
+                                else
+                                {
+                                    <img src="~/images/avatarka.jpg" height="30" style="border-radius: 50%"/>
+                                }
+                                
                             </li>
                             <li class="nav-item mt-2 me-2">
                                 <span class="text-dark">@User.Identity.Name</span>
