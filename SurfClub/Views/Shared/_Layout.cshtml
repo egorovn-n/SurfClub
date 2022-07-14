@@ -12,11 +12,15 @@
     <link rel="stylesheet" href="~/SurfClub.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <header class="header-color">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo.jpg" height="30" />
+                    <img src="~/images/logo1.jpg" height="30" class="rounded" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -30,11 +34,11 @@
                             <li class="nav-item mt-2 me-2">
                                 @if (userPhoto != null)
                                 {
-                                    <img src="@Url.Content(userPhoto)" height="30" style="border-radius: 50%"/>
+                                    <img src="@Url.Content(userPhoto)" height="30" width="30" style="border-radius: 50%"/>
                                 }
                                 else
                                 {
-                                    <img src="~/images/avatarka.jpg" height="30" style="border-radius: 50%"/>
+                                    <img src="~/images/avatarka.jpg" height="30" width="30" style="border-radius: 50%"/>
                                 }
                                 
                             </li>
@@ -44,7 +48,7 @@
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">
-                                    <img src="~/images/logout.jpg" height="30" />
+                                    <img src="~/images/logout1.png" height="30" />
                                 </a>
                             </li>
                         } else {
@@ -66,9 +70,5 @@
         </main>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

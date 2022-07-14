@@ -16,7 +16,7 @@ namespace SurfClub.Models
         /// <summary>
         /// Текст записи
         /// </summary>
-        [MaxLength(5000)]
+        [MaxLength(4095)]
         [Display(Name = "Введите текст")]
         public string? Text { get; set; }
 

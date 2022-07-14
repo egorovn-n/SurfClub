@@ -34,6 +34,12 @@ namespace SurfClub.Controllers
 
             if (photo != null)
             {
+                var extension = Path.GetExtension(photo.FileName);
+                if (extension.ToLower() != ".jpg" && extension.ToLower() != ".jpeg"
+                    && extension.ToLower() != ".png")
+                {
+                    return RedirectToAction("Index");
+                }
                 var imageHelper = new ImageHelper();
                 newPost.Photo = await imageHelper.UploadImage(photo);
             }
@@ -47,8 +53,9 @@ namespace SurfClub.Controllers
         }
         private void SetPostsToViewBag()
         {
-            var posts = _context.Posts
+            List<Post> posts = _context.Posts
                 .Include(p => p.Author)
+                .OrderByDescending(p => p.CreateDate)
                 .ToList();
             ViewBag.Posts = posts;
         }

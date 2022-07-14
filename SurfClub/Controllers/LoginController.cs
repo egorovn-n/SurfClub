@@ -26,7 +26,8 @@ namespace SurfClub.Controllers
                 await _signInManager.SignOutAsync();
             }
 
-            return View();
+            var model = new LoginViewModel();
+            return View(model);
         }
 
         [HttpPost]

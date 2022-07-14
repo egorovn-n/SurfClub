@@ -43,19 +43,20 @@ namespace SurfClub.Controllers
             var user = await _userManager.FindByNameAsync(registrationData.UserName);
             if (user != null)
             {
-                ModelState.AddModelError("", "Такой псевдоним уже занят!");
+                ModelState.AddModelError("UserName", "Такой псевдоним уже занят!");
                 return View("Index", registrationData);
             }
             if (user != null)
             {
-                ModelState.AddModelError("", "Такая почта уже зарегистрирована!");
+                ModelState.AddModelError("Email", "Такая почта уже зарегистрирована!");
                 return View("Index", registrationData);
             }
-            if (registrationData.Password != registrationData.ConfirmPassword)
-            {
-                ModelState.AddModelError("", "Пароли не совпадают");
-                return View("Index", registrationData);
-            }
+            //if (registrationData.Password != registrationData.ConfirmPassword)
+            //{
+            //    ModelState.AddModelError("ConfirmPassword", "Пароли не совпадают");
+                
+            //    return View("Index", registrationData);
+            //}
             user = new User()
             {
                 UserName = registrationData.UserName,
@@ -74,6 +75,10 @@ namespace SurfClub.Controllers
             }
 
             var result = await _userManager.CreateAsync(user, registrationData.Password);
+            if(!result.Succeeded)
+            {
+                return View("Register", registrationData);
+            }
             _context.SaveChanges();
             await _signInManager.SignInAsync(user, isPersistent: false);
             ////Переход на главную страницу

@@ -18,7 +18,7 @@
                         <div class="modal-body">
                             <div>
                                 <label asp-for="Text" class="form-label"></label>
-                                <textarea asp-for="Text" type="text" class="form-control" rows="5"></textarea>
+                                <textarea asp-for="Text" type="text" class="form-control" rows="5" maxlength="4095"></textarea>
                                 <span asp-validation-for="Text"></span>
                             </div>
 
@@ -52,32 +52,33 @@
                                 @if (@post.Author.Photo != null)
                                 {
                                     var authorPhotoUrl = ImageHelper.GetUrl(post.Author.Photo);
-                                    <img src="@Url.Content(authorPhotoUrl)" height="30" style="border-radius: 50%"/>
+                                    <img src="@Url.Content(authorPhotoUrl)" height="30" width="30" style="border-radius: 50%"/>
                                 }
                                 else 
                                 {
-                                    <img src="~/images/avatarka.jpg" height="30" style="border-radius: 50%"/>
+                                    <img src="~/images/avatarka.jpg"  height="30" width="30" style="border-radius: 50%"/>
                                 }
                             </div>
                             <div class="ms-2">
                                 <label class="fs-5 fw-normal d-block">@post.Author.UserName</label>
-                                <label class="fs-7 fw-light">@post.CreateDate</label>
+                                @{
+                                    var date = post.CreateDate.Date.ToString("dd.MM.yyyy");
+                                    var time = post.CreateDate.ToString("HH:mm");
+                                    var postDate = date + " в " + time;
+                                }
+                                <label class="fs-7 fw-light">@postDate</label>
                             </div>
                         </div>
 
                         <div class="modal-body">
                             @if (!string.IsNullOrEmpty(@post.Text))
                             {
-                                <div>
-                                    <p>@post.Text</p>
-                                </div>
+                                <p style="white-space:pre-wrap">@post.Text</p>
                             }
                             @if (@post.Photo.HasValue)
                             {
                                 var photoUrl = ImageHelper.GetUrl(post.Photo);
-                                <div class="justify-content-center">
-                                    <img src="@Url.Content(photoUrl)" class="mw-100"/>
-                                </div>
+                                <img src="@Url.Content(photoUrl)" class="mw-100 mx-auto d-block"/>
                             }
                         </div>
 
